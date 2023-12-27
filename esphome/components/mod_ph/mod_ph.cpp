@@ -56,8 +56,8 @@ namespace esphome
             this->read_byte(STATUS_REGISTER, &status);
             if (status == STATUS_NO_ERROR)
             {
-                float ms = _read_4_bytes(PH_REGISTER);
-                ESP_LOGD(TAG, "'%s': Got pH=%.2f ", this->get_name().c_str(), ms);
+                float ms = _read_4_bytes(MV_REGISTER);
+                ESP_LOGD(TAG, "'%s': Got mv=%.2f ", this->get_name().c_str(), ms);
                 this->publish_state(ms);
             }
             else

@@ -18,10 +18,10 @@ Mod_pHSensor = mod_ph_ns.class_(
 CONFIG_SCHEMA = (
     sensor.sensor_schema(
         Mod_pHSensor,
-        unit_of_measurement=UNIT_PH,
-        accuracy_decimals=2,
+        unit_of_measurement="mV",
+        accuracy_decimals=1,
         state_class=STATE_CLASS_MEASUREMENT,
-        icon="mdi:ph"
+        icon="mdi:lightning-bolt"
     )
     .extend(
         {
