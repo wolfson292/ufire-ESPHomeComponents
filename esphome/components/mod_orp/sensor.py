@@ -17,7 +17,7 @@ CONFIG_SCHEMA = (
     sensor.sensor_schema(
         Mod_ORPSensor,
         unit_of_measurement="mV",
-        accuracy_decimals=1,
+        accuracy_decimals=2,
         state_class=STATE_CLASS_MEASUREMENT,
         icon="mdi:lightning-bolt"
     )
