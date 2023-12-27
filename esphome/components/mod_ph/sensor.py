@@ -19,7 +19,7 @@ CONFIG_SCHEMA = (
     sensor.sensor_schema(
         Mod_pHSensor,
         unit_of_measurement="mV",
-        accuracy_decimals=2,
+        accuracy_decimals=5,
         state_class=STATE_CLASS_MEASUREMENT,
         icon="mdi:lightning-bolt"
     )
