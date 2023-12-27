@@ -79,7 +79,7 @@ namespace esphome
 
         void Mod_pHSensor::calibrateSingle(float calibration_ph)
         {
-            ESP_LOGD(TAG, "Calibrate Single Pressed.%f", calibration_ph);
+            ESP_LOGD(TAG, "Calibrate Single Pressed. %f", calibration_ph);
             _write_4_bytes(PH_REGISTER, calibration_ph);
             if (this->temperature_sensor != nullptr)
             {
@@ -111,7 +111,7 @@ namespace esphome
 
         void Mod_pHSensor::calibrateMid(float calibration_ph)
         {
-            ESP_LOGD(TAG, "Calibrate Mid Pressed.", calibration_ph);
+            ESP_LOGD(TAG, "Calibrate Mid Pressed. %f", calibration_ph);
             _write_4_bytes(PH_REGISTER, calibration_ph);
             if (this->temperature_sensor != nullptr)
             {
