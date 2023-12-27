@@ -87,7 +87,7 @@ namespace esphome
 
         void Mod_ECSensor::calibrateSingle(float calibration_ms)
         {
-            ESP_LOGD(TAG, "Calibrate Single Pressed.", calibration_ms);
+            ESP_LOGD(TAG, "Calibrate Single Pressed. %f", calibration_ms);
             _write_4_bytes(MS_REGISTER, calibration_ms);
             if (this->temperature_sensor != nullptr)
             {
@@ -106,7 +106,7 @@ namespace esphome
 
         void Mod_ECSensor::calibrateLow(float calibration_ms)
         {
-            ESP_LOGD(TAG, "Calibrate Low Pressed.", calibration_ms);
+            ESP_LOGD(TAG, "Calibrate Low Pressed. %f", calibration_ms);
             _write_4_bytes(MS_REGISTER, calibration_ms);
             if (this->temperature_sensor != nullptr)
             {

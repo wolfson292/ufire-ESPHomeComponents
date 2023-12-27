@@ -58,7 +58,7 @@ namespace esphome
 
         void Mod_ORPSensor::calibrateSingle(float calibration_mv)
         {
-            ESP_LOGD(TAG, "Calibrate Single Pressed.", calibration_mv);
+            ESP_LOGD(TAG, "Calibrate Single Pressed. %f", calibration_mv);
             _write_4_bytes(MV_REGISTER, calibration_mv);
 
             _send_command(CALIBRATE_SINGLE_TASK);
