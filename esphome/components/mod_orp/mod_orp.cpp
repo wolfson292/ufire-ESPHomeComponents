@@ -15,7 +15,8 @@ namespace esphome
             uint8_t version;
             if (!this->read_byte(HW_VERSION_REGISTER, &version) && version != 0xFF)
             {
-                this->mark_failed();
+                ESP_LOGE(TAG, "Unable to read version");
+                //this->mark_failed();
                 return;
             }
             ESP_LOGI(TAG, "Found Mod-ORP version %d", version);
