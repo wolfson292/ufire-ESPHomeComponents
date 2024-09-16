@@ -193,6 +193,17 @@ namespace esphome
 
         void Now_MQTT_BridgeComponent::setup()
         {
+            // if there's no wifi section, init wifi here
+            #ifndef USE_WIFI
+            ESP_LOGD(TAG, "Setting up ESP-Now WiFi interface...");
+            ESP_ERROR_CHECK(esp_netif_init());
+            wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+            ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+            ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
+            ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+            ESP_ERROR_CHECK(esp_wifi_start());
+            ESP_ERROR_CHECK(esp_wifi_set_channel(this->wifi_channel_, WIFI_SECOND_CHAN_NONE));
+            #endif
             uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
             esp_now_peer_info_t peerInfo = {};
 
