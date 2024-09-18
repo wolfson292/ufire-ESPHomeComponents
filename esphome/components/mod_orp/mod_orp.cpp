@@ -24,7 +24,7 @@ namespace esphome
 
         void Mod_ORPSensor::dump_config()
         {
-            ESP_LOGI(TAG, "Single point %f", _read_4_bytes(CALIBRATE_SINGLE_OFFSET_REGISTER));
+            //ESP_LOGI(TAG, "Single point %f", _read_4_bytes(CALIBRATE_SINGLE_OFFSET_REGISTER));
         }
 
         void Mod_ORPSensor::update()

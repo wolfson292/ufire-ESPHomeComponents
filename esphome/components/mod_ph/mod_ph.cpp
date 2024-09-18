@@ -24,11 +24,11 @@ namespace esphome
 
         void Mod_pHSensor::dump_config()
         {
-            ESP_LOGI(TAG, "Low reference/read %f/%f", _read_4_bytes(CALIBRATE_READLOW_REGISTER), _read_4_bytes(CALIBRATE_REFLOW_REGISTER));
-            ESP_LOGI(TAG, "Mid reference/read %f/%f", _read_4_bytes(CALIBRATE_READMID_REGISTER), _read_4_bytes(CALIBRATE_REFMID_REGISTER));
-            ESP_LOGI(TAG, "High reference/read %f/%f", _read_4_bytes(CALIBRATE_READHIGH_REGISTER), _read_4_bytes(CALIBRATE_REFHIGH_REGISTER));
-            ESP_LOGI(TAG, "Single point %f", _read_4_bytes(CALIBRATE_SINGLE_OFFSET_REGISTER));
-            ESP_LOGI(TAG, "Calibration temperature %f", _read_4_bytes(CALIBRATE_TEMPERATURE_REGISTER));
+            //ESP_LOGI(TAG, "Low reference/read %f/%f", _read_4_bytes(CALIBRATE_READLOW_REGISTER), _read_4_bytes(CALIBRATE_REFLOW_REGISTER));
+            //ESP_LOGI(TAG, "Mid reference/read %f/%f", _read_4_bytes(CALIBRATE_READMID_REGISTER), _read_4_bytes(CALIBRATE_REFMID_REGISTER));
+            //ESP_LOGI(TAG, "High reference/read %f/%f", _read_4_bytes(CALIBRATE_READHIGH_REGISTER), _read_4_bytes(CALIBRATE_REFHIGH_REGISTER));
+            //ESP_LOGI(TAG, "Single point %f", _read_4_bytes(CALIBRATE_SINGLE_OFFSET_REGISTER));
+            //ESP_LOGI(TAG, "Calibration temperature %f", _read_4_bytes(CALIBRATE_TEMPERATURE_REGISTER));
         }
 
         void Mod_pHSensor::update()

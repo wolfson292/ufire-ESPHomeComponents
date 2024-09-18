@@ -22,9 +22,5 @@ example_sht3x_mqtt.yml
 example_leaf_vpd.yaml
 example_leaf_vpd.yaml
 espnow-light.yaml
-*.pyc
-*.py
-*.py
 esphome/components/now_mqtt/__init__.py
-*.py
 example_mod_ph_heltec.yaml
