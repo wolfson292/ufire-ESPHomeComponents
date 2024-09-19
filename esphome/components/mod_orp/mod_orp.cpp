@@ -12,19 +12,33 @@ namespace esphome
         {
             ESP_LOGCONFIG(TAG, "Setting up Mod-ORP...");
 
-            uint8_t version;
-            if (!this->read_byte(HW_VERSION_REGISTER, &version) && version != 0xFF)
+            uint8_t hwVersion;
+            uint8_t swVersion;
+            if (!this->read_byte(HW_VERSION_REGISTER, &hwVersion) && hwVersion != 0xFF)
             {
-                ESP_LOGE(TAG, "Unable to read version");
+                ESP_LOGE(TAG, "Unable to read hardware version");
                 this->mark_failed();
                 return;
             }
-            ESP_LOGI(TAG, "Found Mod-ORP version %d", version);
+            if (!this->read_byte(SW_VERSION_REGISTER, &swVersion))
+            {
+                ESP_LOGE(TAG, "Unable to read software version");
+                this->mark_failed();
+                return;
+            }
+            ESP_LOGI(TAG, "Found Mod-ORP HW-Version:%d SW-Version:%d", hwVersion, swVersion);
         }
 
         void Mod_ORPSensor::dump_config()
         {
-            //ESP_LOGI(TAG, "Single point %f", _read_4_bytes(CALIBRATE_SINGLE_OFFSET_REGISTER));
+            LOG_I2C_DEVICE(this);
+            if (this->is_failed()) {
+                ESP_LOGE(TAG, "Communication with Mod-ORP failed!");
+            } else {
+                ESP_LOGI(TAG, "Single point %f", _read_4_bytes(CALIBRATE_SINGLE_OFFSET_REGISTER));
+            }
+            LOG_UPDATE_INTERVAL(this);
+            LOG_SENSOR("  ", "ORP", this);
         }
 
         void Mod_ORPSensor::update()
@@ -39,7 +53,10 @@ namespace esphome
         void Mod_ORPSensor::update_internal_()
         {
             uint8_t status;
-            this->read_byte(STATUS_REGISTER, &status);
+            if(!this->read_byte(STATUS_REGISTER, &status))
+            {
+                ESP_LOGE(TAG, "STATUS_REGISTER read failed");
+            }
             if (status == STATUS_NO_ERROR)
             {
                 float ms = _read_4_bytes(MV_REGISTER);

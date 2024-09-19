@@ -12,23 +12,37 @@ namespace esphome
         {
             ESP_LOGCONFIG(TAG, "Setting up Mod-pH...");
 
-            uint8_t version;
-            if (!this->read_byte(HW_VERSION_REGISTER, &version) && version != 0xFF)
+            uint8_t hwVersion;
+            uint8_t swVersion;
+            if (!this->read_byte(HW_VERSION_REGISTER, &hwVersion) && hwVersion != 0xFF)
             {
-                ESP_LOGE(TAG, "Unable to read version");
+                ESP_LOGE(TAG, "Unable to read hardware version");
                 this->mark_failed();
                 return;
             }
-            ESP_LOGI(TAG, "Found Mod-pH version %d", version);
+            if (!this->read_byte(SW_VERSION_REGISTER, &swVersion))
+            {
+                ESP_LOGE(TAG, "Unable to read software version");
+                this->mark_failed();
+                return;
+            }
+            ESP_LOGI(TAG, "Found Mod-pH HW-Version:%d SW-Version:%d", hwVersion, swVersion);
         }
 
         void Mod_pHSensor::dump_config()
         {
-            //ESP_LOGI(TAG, "Low reference/read %f/%f", _read_4_bytes(CALIBRATE_READLOW_REGISTER), _read_4_bytes(CALIBRATE_REFLOW_REGISTER));
-            //ESP_LOGI(TAG, "Mid reference/read %f/%f", _read_4_bytes(CALIBRATE_READMID_REGISTER), _read_4_bytes(CALIBRATE_REFMID_REGISTER));
-            //ESP_LOGI(TAG, "High reference/read %f/%f", _read_4_bytes(CALIBRATE_READHIGH_REGISTER), _read_4_bytes(CALIBRATE_REFHIGH_REGISTER));
-            //ESP_LOGI(TAG, "Single point %f", _read_4_bytes(CALIBRATE_SINGLE_OFFSET_REGISTER));
-            //ESP_LOGI(TAG, "Calibration temperature %f", _read_4_bytes(CALIBRATE_TEMPERATURE_REGISTER));
+            LOG_I2C_DEVICE(this);
+            if (this->is_failed()) {
+                ESP_LOGE(TAG, "Communication with Mod-pH failed!");
+            } else {
+                ESP_LOGI(TAG, "Low reference/read %f/%f", _read_4_bytes(CALIBRATE_READLOW_REGISTER), _read_4_bytes(CALIBRATE_REFLOW_REGISTER));
+                ESP_LOGI(TAG, "Mid reference/read %f/%f", _read_4_bytes(CALIBRATE_READMID_REGISTER), _read_4_bytes(CALIBRATE_REFMID_REGISTER));
+                ESP_LOGI(TAG, "High reference/read %f/%f", _read_4_bytes(CALIBRATE_READHIGH_REGISTER), _read_4_bytes(CALIBRATE_REFHIGH_REGISTER));
+                ESP_LOGI(TAG, "Single point %f", _read_4_bytes(CALIBRATE_SINGLE_OFFSET_REGISTER));
+                ESP_LOGI(TAG, "Calibration temperature %f", _read_4_bytes(CALIBRATE_TEMPERATURE_REGISTER));
+            }
+            LOG_UPDATE_INTERVAL(this);
+            LOG_SENSOR("  ", "pH", this);
         }
 
         void Mod_pHSensor::update()
@@ -54,7 +68,10 @@ namespace esphome
         void Mod_pHSensor::update_internal_()
         {
             uint8_t status;
-            this->read_byte(STATUS_REGISTER, &status);
+            if(!this->read_byte(STATUS_REGISTER, &status))
+            {
+                ESP_LOGE(TAG, "STATUS_REGISTER read failed");
+            }
             if (status == STATUS_NO_ERROR)
             {
                 float ms = _read_4_bytes(MV_REGISTER);
