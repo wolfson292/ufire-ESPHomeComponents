@@ -13,20 +13,20 @@ namespace esphome
             ESP_LOGCONFIG(TAG, "Setting up Mod-ORP...");
 
             uint8_t hwVersion;
-            uint8_t swVersion;
+            uint8_t fwVersion;
             if (!this->read_byte(HW_VERSION_REGISTER, &hwVersion) && hwVersion != 0xFF)
             {
                 ESP_LOGE(TAG, "Unable to read hardware version");
                 this->mark_failed();
                 return;
             }
-            if (!this->read_byte(SW_VERSION_REGISTER, &swVersion))
+            if (!this->read_byte(FW_VERSION_REGISTER, &fwVersion))
             {
-                ESP_LOGE(TAG, "Unable to read software version");
+                ESP_LOGE(TAG, "Unable to read firmware version");
                 this->mark_failed();
                 return;
             }
-            ESP_LOGI(TAG, "Found Mod-ORP HW-Version:%d SW-Version:%d", hwVersion, swVersion);
+            ESP_LOGI(TAG, "Found Mod-ORP HW-Version:%d FW-Version:%d", hwVersion, fwVersion);
         }
 
         void Mod_ORPSensor::dump_config()
