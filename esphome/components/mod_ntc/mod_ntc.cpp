@@ -51,11 +51,8 @@ namespace esphome
             if (status == STATUS_NO_ERROR)
             {
                 float ms = _read_4_bytes(TEMP_C_REGISTER);
-                ESP_LOGI(TAG, "'%s': Got temperature=%.4f °C", this->get_name().c_str(), ms);
+                ESP_LOGD(TAG, "'%s': Got temperature=%.2f °C, beta=%f", this->get_name().c_str(), ms, this->getBeta());
                 this->publish_state(ms);
-
-                float resist = _read_4_bytes(RESISTANCE_REGISTER);
-                ESP_LOGI(TAG, "'%s': Got resistance=%.4f °C", this->get_name().c_str(), resist);
             }
             else
             {
